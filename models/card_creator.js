@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const cardCreator = (fields) => {
+const cardCreator = (fields, alias) => {
 	const CardSchema = new Schema(fields);
-	return mongoose.model('Card', CardSchema);
+	return mongoose.model(alias, CardSchema);
 };
 
 module.exports = cardCreator;

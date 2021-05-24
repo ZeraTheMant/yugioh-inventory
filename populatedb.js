@@ -11,10 +11,14 @@ if (!userArgs[0].startsWith('mongodb')) {
 }
 */
 var async = require('async')
-var MonsterCard = require('./models/monster_card')
-var SpellCard = require('./models/spell_card')
-var TrapCard = require('./models/trap_card')
-
+var MonsterCard = require('./models/monster_card');
+var SpellCard = require('./models/spell_card');
+var TrapCard = require('./models/trap_card');
+var Attribute = require('./models/attribute');
+var MonsterType = require('./models/monster_type');
+var MonsterCategory = require('./models/monster_category');
+var SpellType = require('./models/spell_type');
+var TrapType = require('./models/trap_type');
 
 var mongoose = require('mongoose');
 var mongoDB = userArgs[0];
@@ -26,6 +30,11 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 var monster_cards = [];
 var spell_cards = [];
 var trap_cards = [];
+var attributes = [];
+var monster_types = [];
+var monster_categories = [];
+var spell_types = [];
+var trap_types = [];
 
 function monsterCardCreate(name, desc, img, type, attr, level, eff, atk, def, monster_class, cb) {
   monsterCardDetail = {
@@ -98,9 +107,83 @@ function trapCardCreate(name, desc, img, type, eff, cb) {
     console.log('New Trap Card: ' + trapCard);
     trap_cards.push(trapCard)
     cb(null, trapCard)
-  }  );
+  });
 }
 
+function attributeCreate(name, cb) {
+  attributeDetail = { name: name };
+  const attribute = new Attribute(attributeDetail);
+  
+  attribute.save(function (err) {
+    if (err) {
+	  cb(err, null);
+	  return;
+	}
+	console.log('New Attribute: ' + attribute);
+	attributes.push(attribute);
+	cb(null, attribute);
+  });
+}
+
+function monsterTypeCreate(name, cb) {
+  monsterTypeDetail = { name: name };
+  const monsterType = new MonsterType(monsterTypeDetail);
+  
+  monsterType.save(function (err) {
+    if (err) {
+	  cb(err, null);
+	  return;
+	}
+	console.log('New Monster Type: ' + monsterType);
+	monster_types.push(monsterType);
+	cb(null, monsterType);
+  });
+}
+
+function monsterCategoryCreate(name, cb) {
+  monsterCategoryDetail = { name: name };
+  const monsterCategory = new MonsterCategory(monsterCategoryDetail);
+  
+  monsterCategory.save(function (err) {
+    if (err) {
+	  cb(err, null);
+	  return;
+	}
+	console.log('New Monster Category: ' + monsterCategory);
+	monster_categories.push(monsterCategory);
+	cb(null, monsterCategory);
+  });
+}
+
+function spellTypeCreate(name, cb) {
+  spellTypeDetail = { name: name };
+  const spellType = new SpellType(spellTypeDetail);
+  
+  spellType.save(function (err) {
+    if (err) {
+	  cb(err, null);
+	  return;
+	}
+	console.log('New Spell Type: ' + spellType);
+	spell_types.push(spellType);
+	cb(null, spellType);
+  });
+}
+
+function trapTypeCreate(name, cb) {
+  trapTypeDetail = { name: name };
+  const trapType = new TrapType(trapTypeDetail);
+  
+  trapType.save(function (err) {
+	if (err) {
+	  cb(err, null);
+	  return;
+	}
+	console.log('New Trap Type: ' + trapType);
+	trap_types.push(trapType);
+	cb(null, trapType);
+  });
+}
 
 function createMonsters(cb) {
     async.series([
@@ -164,11 +247,192 @@ function createTraps(cb) {
         cb);
 }
 
+function createAttributes(cb) {
+    async.series([
+        function(callback) {			
+          attributeCreate('Light', callback);		
+        },
+        function(callback) {
+          attributeCreate('Dark', callback);	
+        },
+        function(callback) {
+          attributeCreate('Water', callback);	
+        },
+        function(callback) {
+          attributeCreate('Fire', callback);	
+        },
+        function(callback) {
+          attributeCreate('Earth', callback);	
+        },	
+        function(callback) {
+          attributeCreate('Wind', callback);	
+        },
+        function(callback) {
+          attributeCreate('Divine', callback);	
+        },		
+        ],
+        // optional callback
+        cb);
+}
+
+function createMonsterTypes(cb) {
+    async.series([
+        function(callback) {			
+          monsterTypeCreate('Aqua', callback);		
+        },
+        function(callback) {
+          monsterTypeCreate('Dragon', callback);	
+        },
+        function(callback) {
+          monsterTypeCreate('Divine-Beast', callback);	
+        },
+        function(callback) {
+          monsterTypeCreate('Dinosaur', callback);	
+        },
+        function(callback) {
+          monsterTypeCreate('Cyberse', callback);	
+        },	
+        function(callback) {
+          monsterTypeCreate('Beast-Warrior', callback);	
+        },
+        function(callback) {
+          monsterTypeCreate('Beast', callback);	
+        },		
+        function(callback) {			
+          monsterTypeCreate('Fairy', callback);		
+        },
+        function(callback) {
+          monsterTypeCreate('Fiend', callback);	
+        },
+        function(callback) {
+          monsterTypeCreate('Fish', callback);	
+        },
+        function(callback) {
+          monsterTypeCreate('Insect', callback);	
+        },
+        function(callback) {
+          monsterTypeCreate('Machine', callback);	
+        },	
+        function(callback) {
+          monsterTypeCreate('Plant', callback);	
+        },
+        function(callback) {
+          monsterTypeCreate('Psychic', callback);
+		},
+        function(callback) {			
+          monsterTypeCreate('Pyro', callback);		
+        },
+        function(callback) {
+          monsterTypeCreate('Reptile', callback);	
+        },
+        function(callback) {
+          monsterTypeCreate('Rock,', callback);	
+        },
+        function(callback) {
+          monsterTypeCreate('Sea Serpent', callback);	
+        },
+        function(callback) {
+          monsterTypeCreate('Spellcaster', callback);	
+        },	
+        function(callback) {
+          monsterTypeCreate('Thunder', callback);	
+        },
+        function(callback) {
+          monsterTypeCreate('Warrior', callback);	
+        },		
+        function(callback) {			
+          monsterTypeCreate('Winged Beast', callback);		
+        },
+        function(callback) {
+          monsterTypeCreate('Wyrm', callback);	
+        },
+        function(callback) {
+          monsterTypeCreate('Zombie,', callback);	
+        },		
+        ],
+        // optional callback
+        cb);
+}
+
+function createMonsterCategories(cb) {
+    async.series([
+        function(callback) {			
+          monsterCategoryCreate('Normal', callback);		
+        },
+        function(callback) {
+          monsterCategoryCreate('Effect', callback);	
+        },
+        function(callback) {
+          monsterCategoryCreate('Fusion', callback);	
+        },
+        function(callback) {
+          monsterCategoryCreate('Ritual', callback);	
+        },
+        function(callback) {
+          monsterCategoryCreate('Synchro', callback);	
+        },	
+        function(callback) {
+          monsterCategoryCreate('Gemini', callback);	
+        },
+        function(callback) {
+          monsterCategoryCreate('Pendulum', callback);	
+        },		
+        function(callback) {
+          monsterCategoryCreate('Link', callback);	
+        },			
+        ],
+        // optional callback
+        cb);
+}
+
+function createSpellTypes(cb) {
+	async.series([
+	  function(callback) {
+	    spellTypeCreate('Normal', callback);	
+	  },
+   	  function(callback) {
+	    spellTypeCreate('Quick-Play', callback);
+	  },
+	  function(callback) {
+	    spellTypeCreate('Equip', callback);
+	  },	  
+	  function(callback) {
+	    spellTypeCreate('Field', callback);
+	  },		
+	  function(callback) {
+	    spellTypeCreate('Ritual', callback);
+	  },		  
+	  function(callback) {
+		spellTypeCreate('Continuous', callback);
+	  }
+	],
+	cb);
+}
+
+function createTrapTypes(cb) {
+	async.series([
+	  function(callback) {
+	    trapTypeCreate('Normal', callback);
+	  },
+	  function(callback) {
+	    trapTypeCreate('Continuous', callback);
+	  },
+	  function(callback) {
+	    trapTypeCreate('Counter', callback);
+	  },	  
+	],
+	cb);
+}
 
 async.series([
-    createMonsters,
+    /*createMonsters,
     createSpells,
-    createTraps
+    createTraps,
+	createAttributes,
+	createMonsterTypes,
+	createMonsterCategories*/
+	createSpellTypes,
+	createTrapTypes
 ],
 // Optional callback
 function(err, results) {

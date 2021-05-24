@@ -2,6 +2,6 @@ const {monsterCardConstructor} = require('../model_constructors/model_constructo
 const cardCreator = require('./card_creator');
 
 const monsterCardObj = monsterCardConstructor();
-const MonsterCard = cardCreator(monsterCardObj);
+const MonsterCard = cardCreator(monsterCardObj, 'MonsterCard');
 
 module.exports = MonsterCard;
