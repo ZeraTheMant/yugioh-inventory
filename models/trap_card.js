@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
-const extendSchema = require('mongoose-extend-schema');
-const Card = require('card');
+const {trapCardConstructor} = require('../model_constructors/model_constructors');
+const cardCreator = require('./card_creator');
 
-const TrapCardSchema = extendSchema(Card, {});
+const trapCardObj = trapCardConstructor();
+const TrapCard = cardCreator(trapCardObj);
 
-module.exports = mongoose.model('TrapCard', TrapCardSchema);
+module.exports = TrapCard;

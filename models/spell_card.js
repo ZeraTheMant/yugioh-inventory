@@ -1,7 +1,7 @@
-const mongoose = require('mongoose')
-const extendSchema = require('mongoose-extend-schema');
-const Card = require('card');
+const {spellCardConstructor} = require('../model_constructors/model_constructors');
+const cardCreator = require('./card_creator');
 
-const SpellCardSchema = extendSchema(Card, {});
+const spellCardObj = spellCardConstructor();
+const SpellCard = cardCreator(spellCardObj);
 
-module.exports = mongoose.model('SpellCard', SpellCardSchema);
+module.exports = SpellCard;
