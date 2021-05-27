@@ -1,5 +1,60 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+	link(rel='stylesheet', href='/stylesheets/index.css')
+	
+	body
+		h1= title
+		p Welcome to #{title}
+		
+		form#card-search-form(method='' action='')
+			div.form-group
+				label(for='name') Name:
+				input#name.form-control.card-search-field(type='text', name='name', required='true')
+				
+			div.form-group
+				label(for='desc') Desc:
+				input#desc.form-control.card-search-field(type='text', name='desc', required='true')
+				
+			div.form-group
+				label(for='card-category') Card:
+				select#card-category.form-control.card-search-field(type='select', name='card-category', required='true')
+					option(value='default' selected='true') Select a card category	
+					- var statusOptions = ['Monster', 'Spell', 'Trap']		
+			
+					each val in statusOptions
+						option(value=val) #{val}	
+						
+			div.form-group
+				label(for='type') Type:
+				select#card-type.form-control.card-search-field(type='select', name='card-type', disabled='true')
+					option(value='x') dog
+				select#monster-category.form-control.card-search-field(type='select', name='monster-category', disabled='true')
+					option(value='q') normal
+					
+			div.flex-row.form-group
+				label(for='attrib') Attrib:
+				select#attrib.form-control.card-search-field(type='select', name='attrib', required='true', disabled='true')
+					if attributes
+						each attr in attributes					
+							option(value=attr.name) #{attr.name}
+				input#level-filter-min.form-control.card-search-field(type='number', name='level-filter-min', min='1', max='12', disabled='true')
+				label#lvl-rank-separator(for='level-filter-min') ≤ 
+					span Lvl/
+						br
+						| Rank
+					| ≤
+				input#level-filter-max.form-control.card-search-field(type='number', name='level-filter-max', min='1', max='12', disabled='true')
+				
+			div.flex-row.form-group
+				input#atk-filter-min.form-control.card-search-field(type='number', name='atk-filter-min', min='0', max='9999', disabled='true')
+				label(for='atk-filter-min') ≤ ATK ≤	
+				input#atk-filter-max.form-control.card-search-field(type='number', name='atk-filter-max', min='0', max='9999', disabled='true')
+				
+				input#def-filter-min.form-control.card-search-field(type='number', name='def-filter-min', min='0', max='9999', disabled='true')
+				label(for='def-filter-min') ≤ DEF ≤
+				input#def-filter-max.form-control.card-search-field(type='number', name='def-filter-max', min='0', max='9999', disabled='true')
+				
+		script(type='text/javascript' src="/javascripts/index.js")
+				
+			

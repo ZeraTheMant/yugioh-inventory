@@ -69,17 +69,34 @@ router.get('/monster_types/', monster_type_controller.monster_type_list);
 
 
 // monster card routes start //
-router.get('/monster_type/create', monster_type_controller.monster_type_create_get);
-router.post('/monster_type/create', monster_type_controller.monster_type_create_post);
+router.get('/monster_type/create', monster_card_controller.monster_card_create_get);
+router.post('/monster_type/create', monster_card_controller.monster_card_create_post);
 
-router.get('/monster_type/:id/delete', monster_type_controller.monster_type_delete_get);
-router.post('/monster_type/:id/delete', monster_type_controller.monster_type_delete_post);
+router.get('/monster_type/:id/delete', monster_card_controller.monster_card_delete_get);
+router.post('/monster_type/:id/delete', monster_card_controller.monster_card_delete_post);
 
-router.get('/monster_type/:id/update', monster_type_controller.monster_type_update_get);
-router.post('/monster_type/:id/update', monster_type_controller.monster_type_update_post);
+router.get('/monster_type/:id/update', monster_card_controller.monster_card_update_get);
+router.post('/monster_type/:id/update', monster_card_controller.monster_card_update_post);
 
-router.get('/monster_type/:id', monster_type_controller.monster_type_detail);
-router.get('/monster_cards/', monster_type_controller.monster_type_list);
+router.get('/monster_type/:id', monster_card_controller.monster_card_detail);
+router.get('/monster_cards/', monster_card_controller.monster_card_list);
 // monster card routes end //
+
+
+
+
+// spell card routes start //
+router.get('/spell_card/create', monster_type_controller.monster_type_create_get);
+router.post('/spell_card/create', monster_type_controller.monster_type_create_post);
+
+router.get('/spell_card/:id/delete', monster_type_controller.monster_type_delete_get);
+router.post('/spell_card/:id/delete', monster_type_controller.monster_type_delete_post);
+
+router.get('/spell_card/:id/update', monster_type_controller.monster_type_update_get);
+router.post('/spell_card/:id/update', monster_type_controller.monster_type_update_post);
+
+router.get('/spell_card/:id', monster_type_controller.monster_type_detail);
+router.get('/spell_cards/', monster_type_controller.monster_type_list);
+// spell card routes end //
 
 module.exports = router;
