@@ -6,6 +6,8 @@ block content
 	body
 		h1= title
 		p Welcome to #{title}
+		script.
+			const myVar = !{JSON.stringify(attributes)}
 		
 		form#card-search-form(method='' action='')
 			div.form-group
@@ -28,7 +30,9 @@ block content
 			div.form-group
 				label(for='type') Type:
 				select#card-type.form-control.card-search-field(type='select', name='card-type', disabled='true')
-					option(value='x') dog
+					if monster_types
+						each monster_type in monster_types
+							option(monster_type.name) #{monster_type.name}
 				select#monster-category.form-control.card-search-field(type='select', name='monster-category', disabled='true')
 					if monster_categories
 						each monster_category in monster_categories
@@ -56,7 +60,7 @@ block content
 				input#def-filter-min.form-control.card-search-field(type='number', name='def-filter-min', min='0', max='9999', disabled='true')
 				label(for='def-filter-min') ≤ DEF ≤
 				input#def-filter-max.form-control.card-search-field(type='number', name='def-filter-max', min='0', max='9999', disabled='true')
-				
+	
 		script(type='text/javascript' src="/javascripts/index.js")
 				
 			

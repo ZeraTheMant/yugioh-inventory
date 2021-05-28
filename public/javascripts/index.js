@@ -12,8 +12,8 @@ const atkFilterMaxInput = document.querySelector('#atk-filter-max');
 const defFilterMinInput = document.querySelector('#def-filter-min');
 const defFilterMaxInput = document.querySelector('#def-filter-max');
 
-const MonsterType = require('../../models/monster_type');
-alert(MonsterType);
+
+myVar.forEach(type => alert(type.name));
 
 function monsterFieldsToggle(flag) {
 	attributeSelect.disabled = flag;
