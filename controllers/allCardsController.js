@@ -2,20 +2,10 @@ const async = require('async');
 const Attribute = require('../models/attribute');
 const MonsterCategory = require('../models/monster_category');
 const MonsterType = require('../models/monster_type');
+const SpellType = require('../models/spell_type');
+const TrapType = require('../models/trap_type');
 
 exports.index = function(req, res, next) {
-	/*Attribute
-		.find()
-		//.populate()
-		.exec(function (err, attributes) {
-			if (err) { return next(err); }
-			const context = {
-				title: 'Card Inventory',
-				attributes: attributes
-			};
-			res.render('index', context);			
-	});*/
-
 	async.parallel({
 		attributes: function(callback) {
 			Attribute.find().exec(callback);
@@ -25,6 +15,12 @@ exports.index = function(req, res, next) {
 		},
 		monster_types: function(callback) {
 			MonsterType.find().exec(callback);
+		},
+		spell_types: function(callback) {
+			SpellType.find().exec(callback);
+		},
+		trap_types: function(callback) {
+			TrapType.find().exec(callback);
 		}
 	}, function(err, results) {
 		if (err) { return next(err); }
@@ -33,7 +29,9 @@ exports.index = function(req, res, next) {
 			title: 'Card Inventory',
 			attributes: results.attributes,
 			monster_categories: results.monster_categories,
-			monster_types: results.monster_types
+			monster_types: results.monster_types,
+			spell_types: results.spell_types,
+			trap_types: results.trap_types
 		};
 		res.render('index', context);
 	});

@@ -4,10 +4,11 @@ block content
 	link(rel='stylesheet', href='/stylesheets/index.css')
 	
 	body
+		extends nav
+		block x
+		
 		h1= title
 		p Welcome to #{title}
-		script.
-			const myVar = !{JSON.stringify(attributes)}
 		
 		form#card-search-form(method='' action='')
 			div.form-group
@@ -21,7 +22,7 @@ block content
 			div.form-group
 				label(for='card-category') Card:
 				select#card-category.form-control.card-search-field(type='select', name='card-category', required='true')
-					option(value='default' selected='true') Select a card category	
+					option(value='default', selected='true', disabled='true') Select a card category	
 					- var statusOptions = ['Monster', 'Spell', 'Trap']		
 			
 					each val in statusOptions
@@ -30,20 +31,13 @@ block content
 			div.form-group
 				label(for='type') Type:
 				select#card-type.form-control.card-search-field(type='select', name='card-type', disabled='true')
-					if monster_types
-						each monster_type in monster_types
-							option(monster_type.name) #{monster_type.name}
+				
 				select#monster-category.form-control.card-search-field(type='select', name='monster-category', disabled='true')
-					if monster_categories
-						each monster_category in monster_categories
-							option(monster_category.name) #{monster_category.name}
 					
 			div.flex-row.form-group
 				label(for='attrib') Attrib:
 				select#attrib.form-control.card-search-field(type='select', name='attrib', required='true', disabled='true')
-					if attributes
-						each attr in attributes					
-							option(value=attr.name) #{attr.name}
+
 				input#level-filter-min.form-control.card-search-field(type='number', name='level-filter-min', min='1', max='12', disabled='true')
 				label#lvl-rank-separator(for='level-filter-min') ≤ 
 					span Lvl/
@@ -61,6 +55,12 @@ block content
 				label(for='def-filter-min') ≤ DEF ≤
 				input#def-filter-max.form-control.card-search-field(type='number', name='def-filter-max', min='0', max='9999', disabled='true')
 	
+		script.
+			const monsterTypesObj = !{JSON.stringify(monster_types)}
+			const spellTypesObj = !{JSON.stringify(spell_types)}
+			const trapTypesObj = !{JSON.stringify(trap_types)}
+			const attributesObj = !{JSON.stringify(attributes)}
+			const monsterCategoriesObj = !{JSON.stringify(monster_categories)}	
 		script(type='text/javascript' src="/javascripts/index.js")
 				
 			
