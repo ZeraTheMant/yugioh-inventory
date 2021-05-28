@@ -12,6 +12,9 @@ const atkFilterMaxInput = document.querySelector('#atk-filter-max');
 const defFilterMinInput = document.querySelector('#def-filter-min');
 const defFilterMaxInput = document.querySelector('#def-filter-max');
 
+const MonsterType = require('../../models/monster_type');
+alert(MonsterType);
+
 function monsterFieldsToggle(flag) {
 	attributeSelect.disabled = flag;
 	monsterCategorySelect.disabled = flag;
@@ -23,8 +26,6 @@ function monsterFieldsToggle(flag) {
 	defFilterMinInput.disabled = flag;
 	defFilterMaxInput.disabled = flag;
 }
-
-function dummyWithOneArg(arg) { return; }
 
 function resetCardSearchForm() {
 	//resets the entire form and disables buttons below the card section

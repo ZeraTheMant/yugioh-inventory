@@ -30,7 +30,9 @@ block content
 				select#card-type.form-control.card-search-field(type='select', name='card-type', disabled='true')
 					option(value='x') dog
 				select#monster-category.form-control.card-search-field(type='select', name='monster-category', disabled='true')
-					option(value='q') normal
+					if monster_categories
+						each monster_category in monster_categories
+							option(monster_category.name) #{monster_category.name}
 					
 			div.flex-row.form-group
 				label(for='attrib') Attrib:
