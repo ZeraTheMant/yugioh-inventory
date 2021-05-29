@@ -39,10 +39,10 @@ router.get('/spell_type/create', spell_type_controller.spell_type_create_get);
 router.post('/spell_type/create', spell_type_controller.spell_type_create_post);
 
 router.get('/spell_type/:id/delete', spell_type_controller.spell_type_delete_get);
-router.get('/spell_type/:id/delete', spell_type_controller.spell_type_delete_post);
+router.post('/spell_type/:id/delete', spell_type_controller.spell_type_delete_post);
 
 router.get('/spell_type/:id/update', spell_type_controller.spell_type_update_get);
-router.get('/spell_type/:id/update', spell_type_controller.spell_type_update_post);
+router.post('/spell_type/:id/update', spell_type_controller.spell_type_update_post);
 
 router.get('/spell_type/:id', spell_type_controller.spell_type_detail);
 router.get('/spell_types/', spell_type_controller.spell_type_list);
@@ -56,10 +56,10 @@ router.get('/trap_type/create', trap_type_controller.trap_type_create_get);
 router.post('trap_type/create', trap_type_controller.trap_type_create_post);
 
 router.get('/trap_type/:id/delete', trap_type_controller.trap_type_delete_get);
-router.get('/trap_type/:id/delete', trap_type_controller.trap_type_delete_post);
+router.post('/trap_type/:id/delete', trap_type_controller.trap_type_delete_post);
 
 router.get('/trap_type/:id/update', trap_type_controller.trap_type_update_get);
-router.get('/trap_type/:id/update', trap_type_controller.trap_type_update_post);
+router.post('/trap_type/:id/update', trap_type_controller.trap_type_update_post);
 
 router.get('/trap_type/:id', trap_type_controller.trap_type_detail);
 router.get('/trap_types/', trap_type_controller.trap_type_list);
@@ -103,16 +103,16 @@ router.get('/monster_types/', monster_type_controller.monster_type_list);
 
 
 // monster card routes start //
-router.get('/monster_type/create', monster_card_controller.monster_card_create_get);
-router.post('/monster_type/create', monster_card_controller.monster_card_create_post);
+router.get('/monster_card/create', monster_card_controller.monster_card_create_get);
+router.post('/monster_card/create', monster_card_controller.monster_card_create_post);
 
-router.get('/monster_type/:id/delete', monster_card_controller.monster_card_delete_get);
-router.post('/monster_type/:id/delete', monster_card_controller.monster_card_delete_post);
+router.get('/monster_card/:id/delete', monster_card_controller.monster_card_delete_get);
+router.post('/monster_card/:id/delete', monster_card_controller.monster_card_delete_post);
 
-router.get('/monster_type/:id/update', monster_card_controller.monster_card_update_get);
-router.post('/monster_type/:id/update', monster_card_controller.monster_card_update_post);
+router.get('/monster_card/:id/update', monster_card_controller.monster_card_update_get);
+router.post('/monster_card/:id/update', monster_card_controller.monster_card_update_post);
 
-router.get('/monster_type/:id', monster_card_controller.monster_card_detail);
+router.get('/monster_card/:id', monster_card_controller.monster_card_detail);
 router.get('/monster_cards/', monster_card_controller.monster_card_list);
 // monster card routes end //
 
@@ -120,17 +120,34 @@ router.get('/monster_cards/', monster_card_controller.monster_card_list);
 
 
 // spell card routes start //
-router.get('/spell_card/create', monster_type_controller.monster_type_create_get);
-router.post('/spell_card/create', monster_type_controller.monster_type_create_post);
+router.get('/spell_card/create', spell_card_controller.spell_card_create_get);
+router.post('/spell_card/create', spell_card_controller.spell_card_create_post);
 
-router.get('/spell_card/:id/delete', monster_type_controller.monster_type_delete_get);
-router.post('/spell_card/:id/delete', monster_type_controller.monster_type_delete_post);
+router.get('/spell_card/:id/delete', spell_card_controller.spell_card_delete_get);
+router.post('/spell_card/:id/delete', spell_card_controller.spell_card_delete_post);
 
-router.get('/spell_card/:id/update', monster_type_controller.monster_type_update_get);
-router.post('/spell_card/:id/update', monster_type_controller.monster_type_update_post);
+router.get('/spell_card/:id/update', spell_card_controller.spell_card_update_get);
+router.post('/spell_card/:id/update', spell_card_controller.spell_card_update_post);
 
-router.get('/spell_card/:id', monster_type_controller.monster_type_detail);
-router.get('/spell_cards/', monster_type_controller.monster_type_list);
+router.get('/spell_card/:id', spell_card_controller.spell_card_detail);
+router.get('/spell_cards/', spell_card_controller.spell_card_list);
 // spell card routes end //
+
+
+
+
+// trap card routes start //
+router.get('/trap_card/create', trap_card_controller.trap_card_create_get);
+router.post('/trap_card/create', trap_card_controller.trap_card_create_post);
+
+router.get('/trap_card/:id/delete', trap_card_controller.trap_card_delete_get);
+router.post('/trap_card/:id/delete', trap_card_controller.trap_card_delete_post);
+
+router.get('/trap_card/:id/update', trap_card_controller.trap_card_update_get);
+router.post('/trap_card/:id/update', trap_card_controller.trap_card_update_post);
+
+router.get('/trap_card/:id', trap_card_controller.trap_card_detail);
+router.get('/trap_cards/', trap_card_controller.trap_card_list)
+// trap card routes end //
 
 module.exports = router;
