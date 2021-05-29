@@ -34,6 +34,30 @@ router.get('/attributes/', attribute_controller.attribute_list);
 
 
 
+// spell types routes start //
+router.get('/spell_type/create', spell_type_controller.spell_type_create_get);
+router.post('/spell_type/create', spell_type_controller.spell_type_create_post);
+
+router.get('/spell_type/:id/delete', spell_type_controller.spell_type_delete_get);
+router.get('/spell_type/:id/delete', spell_type_controller.spell_type_delete_post);
+
+router.get('/spell_type/:id/update', spell_type_controller.spell_type_update_get);
+router.get('/spell_type/:id/update', spell_type_controller.spell_type_update_post);
+
+router.get('/spell_type/:id', spell_type_controller.spell_type_detail);
+router.get('/spell_types/', spell_type_controller.spell_type_list);
+// spell types routes end //
+
+
+
+
+// trap types routes start //
+
+// trap types routes end //
+
+
+
+
 // monster category routes start //
 router.get('/monster_category/create', monster_category_controller.monster_category_create_get);
 router.post('/monster_category/create', monster_category_controller.monster_category_create_post);
