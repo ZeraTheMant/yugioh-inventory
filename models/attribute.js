@@ -10,7 +10,7 @@ var AttributeSchema = new Schema(
 AttributeSchema
 	.virtual('url')
 	.get(function () {
-		return '/catalog/attribute/' + this._id;
+		return '/attribute/' + this._id;
 });
 
 module.exports = mongoose.model('Attribute', AttributeSchema);
