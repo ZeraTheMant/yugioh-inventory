@@ -52,7 +52,17 @@ router.get('/spell_types/', spell_type_controller.spell_type_list);
 
 
 // trap types routes start //
+router.get('/trap_type/create', trap_type_controller.trap_type_create_get);
+router.post('trap_type/create', trap_type_controller.trap_type_create_post);
 
+router.get('/trap_type/:id/delete', trap_type_controller.trap_type_delete_get);
+router.get('/trap_type/:id/delete', trap_type_controller.trap_type_delete_post);
+
+router.get('/trap_type/:id/update', trap_type_controller.trap_type_update_get);
+router.get('/trap_type/:id/update', trap_type_controller.trap_type_update_post);
+
+router.get('/trap_type/:id', trap_type_controller.trap_type_detail);
+router.get('/trap_types/', trap_type_controller.trap_type_list);
 // trap types routes end //
 
 
