@@ -1,0 +1,15 @@
+extends layout
+
+block content
+	h1 #{title}
+	
+	form(method='POST' action='')
+		div.form-group
+			label(for='monster_category') Monster Type:
+			input#monster_category.form-control(type='text', placeholder='Enter monster category' name='monster_category' value=(undefined===monster_category ? '' : monster_category.name), required='true')
+		button.btn.btn-primary(type='submit') Submit
+			
+	if errors
+		ul
+			for error in errors
+				li!= error.msg
