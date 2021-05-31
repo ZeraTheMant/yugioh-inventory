@@ -5,7 +5,7 @@ block content
 	
 	form(method='POST' action='')
 		div.form-group
-			label(for='monster_category') Monster Type:
+			label(for='monster_category') Monster Category:
 			input#monster_category.form-control(type='text', placeholder='Enter monster category' name='monster_category' value=(undefined===monster_category ? '' : monster_category.name), required='true')
 		button.btn.btn-primary(type='submit') Submit
 			
