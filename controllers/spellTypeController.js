@@ -2,8 +2,17 @@ const async = require('async');
 const { body, validationResult } = require('express-validator');
 const SpellType = require('../models/spell_type');
 
-exports.spell_type_list = function(req, res) {
-	res.send('spell type list not implemented');
+exports.spell_type_list = function(req, res, next) {
+	SpellType.find()
+		.exec(function (err, spell_types) {
+			if (err) { return next(err); }
+		
+			const context = {
+				title: 'Spell Type List',
+				spell_types: spell_types
+			};
+			res.render('spell_type_list', context);
+		});
 };
 
 exports.spell_type_detail = function(req, res) {

@@ -2,8 +2,12 @@ const async = require('async');
 const {body, validationResult} = require('express-validator');
 const Attribute = require('../models/attribute');
 
-exports.attribute_list = function(req, res) {
-	res.send('attribute list not implemented');
+exports.attribute_list = function(req, res, next) {
+	Attribute.find()
+		.exec(function (err, attributes) {
+			if (err) { return next(err); }
+			res.render('attribute_list', {title: 'Attribute List', attribute_list: attributes});
+		});
 };
 
 exports.attribute_detail = function(req, res) {

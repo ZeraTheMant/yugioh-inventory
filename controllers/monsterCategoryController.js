@@ -3,7 +3,17 @@ const { body, validationResult } = require('express-validator');
 const MonsterCategory = require('../models/monster_category');
 
 exports.monster_category_list = function(req, res) {
-	res.send('monster category list not implemented');
+	MonsterCategory.find()
+		.exec(function (err, monster_categories) {
+			if (err) { return next(err); }
+			
+			const context = {
+				title: 'Monster Category List',
+				monster_categories: monster_categories
+			};
+			
+			res.render('monster_category_list', context);
+		});
 };
 
 exports.monster_category_detail = function(req, res) {

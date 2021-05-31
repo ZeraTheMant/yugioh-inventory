@@ -2,8 +2,17 @@ const async = require('async');
 const { body, validationResult } = require('express-validator');
 const MonsterType = require('../models/monster_type');
 
-exports.monster_type_list = function(req, res) {
-	res.send('monster type list not implemented');
+exports.monster_type_list = function(req, res, next) {
+	MonsterType.find()
+		.exec(function (err, monster_types) {
+			if (err) { return next(err); }
+			
+			const context = {
+				title: 'Monster Type List',
+				monster_types: monster_types
+			};
+			res.render('monster_type_list', context);
+		});
 };
 
 exports.monster_type_detail = function(req, res) {

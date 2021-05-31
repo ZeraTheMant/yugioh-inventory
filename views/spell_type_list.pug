@@ -1,0 +1,11 @@
+extends layout
+
+block content
+	h1= title
+	
+	ul
+		each spell_type in spell_types
+			li 
+				a(href=spell_type.url) #{spell_type.name}
+		else
+			li There are no spell types.			

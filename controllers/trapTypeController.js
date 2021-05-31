@@ -2,8 +2,17 @@ const async = require('async');
 const { body, validationResult } = require('express-validator');
 const TrapType = require('../models/trap_type');
 
-exports.trap_type_list = function(req, res) {
-	res.send('trap type list not implemented');
+exports.trap_type_list = function(req, res, next) {
+	TrapType.find()
+		.exec(function (err, trap_types) {
+			if (err) { return next(err) }
+		
+			const context = {
+				title: 'Trap Type List',
+				trap_types: trap_types
+			}
+			res.render('trap_type_list', context);
+		});
 };
 
 exports.trap_type_detail = function(req, res) {

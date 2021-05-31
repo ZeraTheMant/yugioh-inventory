@@ -1,0 +1,11 @@
+extends layout
+
+block content
+	h1= title
+	
+	ul
+		each monster_type in monster_types
+			li 
+				a(href=monster_type.url) #{monster_type.name}
+		else
+			li There are no monster types.			

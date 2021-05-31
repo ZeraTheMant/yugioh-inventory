@@ -1,0 +1,11 @@
+extends layout
+
+block content
+	h1= title
+	
+	ul
+		each trap_type in trap_types
+			li 
+				a(href=trap_type.url) #{trap_type.name}
+		else
+			li There are no trap types.			
