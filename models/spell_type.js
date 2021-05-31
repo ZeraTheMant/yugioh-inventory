@@ -10,7 +10,7 @@ var SpellTypeSchema = new Schema(
 SpellTypeSchema
 	.virtual('url')
 	.get(function () {
-		return '/catalog/spell_type/' + this._id;
+		return '/spell_type/' + this._id;
 });
 
 module.exports = mongoose.model('SpellType', SpellTypeSchema);

@@ -5,7 +5,7 @@ block content
 	
 	form(method='POST' action='')
 		div.form-group
-			label(for='spell_type') Monster Type:
+			label(for='spell_type') Spell Type:
 			input#spell_type.form-control(type='text', placeholder='Enter spell type' name='spell_type' value=(undefined===spell_type ? '' : spell_type.name), required='true')
 		button.btn.btn-primary(type='submit') Submit
 			

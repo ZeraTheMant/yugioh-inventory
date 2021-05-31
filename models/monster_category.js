@@ -10,7 +10,7 @@ var MonsterCategorySchema = new Schema(
 MonsterCategorySchema
 	.virtual('url')
 	.get(function () {
-		return '/catalog/monster_/' + this._id;
+		return '/monster_category/' + this._id;
 });
 
 module.exports = mongoose.model('MonsterCategory', MonsterCategorySchema);

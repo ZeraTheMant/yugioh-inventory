@@ -10,7 +10,7 @@ var TrapTypeSchema = new Schema(
 TrapTypeSchema
 	.virtual('url')
 	.get(function () {
-		return '/catalog/trap_type/' + this._id;
+		return '/trap_type/' + this._id;
 });
 
 module.exports = mongoose.model('TrapType', TrapTypeSchema);

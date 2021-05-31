@@ -1,0 +1,15 @@
+extends layout
+
+block content
+	h1 #{title}
+	
+	form(method='POST' action='')
+		div.form-group
+			label(for='trap_type') Trap Type:
+			input#trap_type.form-control(type='text', placeholder='Enter trap type' name='trap_type' value=(undefined===trap_type ? '' : trap_type.name), required='true')
+		button.btn.btn-primary(type='submit') Submit
+			
+	if errors
+		ul
+			for error in errors
+				li!= error.msg
