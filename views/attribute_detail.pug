@@ -1,0 +1,13 @@
+extends layout
+
+block content
+	h1 Attribute: #{attribute.name}
+	
+	div(style='margin-left:20px;margin-top:20px')
+		p This attribute has #{attribute_monsters_count} monsters
+
+	hr
+	p
+		a(href=attribute.url+'/delete') Delete Attribute
+	p
+		a(href=attribute.url+'/update') Update Attribute					
