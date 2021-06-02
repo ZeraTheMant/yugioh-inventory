@@ -10,8 +10,27 @@ exports.attribute_list = function(req, res, next) {
 		});
 };
 
-exports.attribute_detail = function(req, res) {
-	res.send('attribute detail of ' + req.params.id +' not implemented');
+exports.attribute_detail = function(req, res, next) {
+	async.parallel({
+		attribute: function(callback) {
+			Attribute.findById(req.params.id)
+				.exec(callback);
+		}
+	}, function(err, results) {
+		if (err) { return next(err); }
+		if (results.attribute==null) {
+			var err = new Error('Attribute not found');
+			err.status = 404;
+			return next(err);
+		}
+		
+		const context = {
+			title: 'Attribute Detail',
+			attribute: results.attribute,
+			attribute_monsters_count: 5
+		}
+		res.render('attribute_detail', context);
+	});
 };
 
 exports.attribute_create_get = function(req, res, next) {
@@ -54,8 +73,23 @@ exports.attribute_create_post = [
 	}
 ];
 
-exports.attribute_delete_get = function(req, res) {
-	res.send('attribute delete get not implemented');
+exports.attribute_delete_get = function(req, res, next) {
+	async.parallel({
+        attribute: function(callback) {
+            Attribute.findById(req.params.id).exec(callback);
+        },	      
+    }, function(err, results) {
+        if (err) { return next(err); }
+        if (results.attribute==null) {
+            res.redirect('/attributes');
+        }
+        
+        const context = {
+            title: 'Delete Attribute',
+			attribute: results.attribute,
+        };
+        res.render('attribute_delete', context);
+    });
 };
 
 exports.attribute_delete_post = function(req, res) {
