@@ -101,7 +101,22 @@ router.get('/monster_types/', monster_type_controller.monster_type_list);
 
 
 
+// card routes start //
+router.get('/card/create', monster_card_controller.monster_card_create_get);
+router.post('/card/create', monster_card_controller.monster_card_create_post);
 
+router.get('/card/:id/delete', monster_card_controller.monster_card_delete_get);
+router.post('/card/:id/delete', monster_card_controller.monster_card_delete_post);
+
+router.get('/card/:id/update', monster_card_controller.monster_card_update_get);
+router.post('/card/:id/update', monster_card_controller.monster_card_update_post);
+
+router.get('/card/:id', monster_card_controller.monster_card_detail);
+router.get('/cards/', monster_card_controller.monster_card_list);
+// card routes end //
+
+
+/*
 // monster card routes start //
 router.get('/monster_card/create', monster_card_controller.monster_card_create_get);
 router.post('/monster_card/create', monster_card_controller.monster_card_create_post);
@@ -149,5 +164,6 @@ router.post('/trap_card/:id/update', trap_card_controller.trap_card_update_post)
 router.get('/trap_card/:id', trap_card_controller.trap_card_detail);
 router.get('/trap_cards/', trap_card_controller.trap_card_list)
 // trap card routes end //
+*/
 
 module.exports = router;
