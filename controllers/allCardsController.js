@@ -37,3 +37,34 @@ exports.index = function(req, res, next) {
 	});
 };
 
+exports.card_create_get = function(req, res, next) {
+	res.render('card_form', {title: 'Create Card'});
+};
+
+exports.card_create_post = function(req, res, next) {
+	res.send('card create post');
+};
+
+exports.card_delete_get = function(req, res, next) {
+	res.send('card delete get');
+};
+
+exports.card_delete_post = function(req, res, next) {
+	res.send('card delete post');
+};
+
+exports.card_update_get = function(req, res, next) {
+	res.send('card update get');
+};
+
+exports.card_update_post = function(req, res, next) {
+	res.send('card update post');
+};
+
+exports.card_detail = function(req, res, next) {
+	res.send('card detail');
+};
+
+exports.card_list = function(req, res, next) {
+	res.send('card list');
+}

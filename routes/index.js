@@ -6,9 +6,9 @@ const monster_category_controller = require('../controllers/monsterCategoryContr
 const monster_type_controller = require('../controllers/monsterTypeController');
 const spell_type_controller = require('../controllers/spellTypeController');
 const trap_type_controller = require('../controllers/trapTypeController');
-const monster_card_controller = require('../controllers/monsterCardController');
-const spell_card_controller = require('../controllers/spellCardController');
-const trap_card_controller = require('../controllers/trapCardController');
+//const monster_card_controller = require('../controllers/monsterCardController');
+//const spell_card_controller = require('../controllers/spellCardController');
+//const trap_card_controller = require('../controllers/trapCardController');
 const all_cards_controller = require('../controllers/allCardsController');
 
 /* index page. */
@@ -102,17 +102,17 @@ router.get('/monster_types/', monster_type_controller.monster_type_list);
 
 
 // card routes start //
-router.get('/card/create', monster_card_controller.monster_card_create_get);
-router.post('/card/create', monster_card_controller.monster_card_create_post);
+router.get('/card/create', all_cards_controller.card_create_get);
+router.post('/card/create', all_cards_controller.card_create_post);
 
-router.get('/card/:id/delete', monster_card_controller.monster_card_delete_get);
-router.post('/card/:id/delete', monster_card_controller.monster_card_delete_post);
+router.get('/card/:id/delete', all_cards_controller.card_delete_get);
+router.post('/card/:id/delete', all_cards_controller.card_delete_post);
 
-router.get('/card/:id/update', monster_card_controller.monster_card_update_get);
-router.post('/card/:id/update', monster_card_controller.monster_card_update_post);
+router.get('/card/:id/update', all_cards_controller.card_update_get);
+router.post('/card/:id/update', all_cards_controller.card_update_post);
 
-router.get('/card/:id', monster_card_controller.monster_card_detail);
-router.get('/cards/', monster_card_controller.monster_card_list);
+router.get('/card/:id', all_cards_controller.card_detail);
+router.get('/cards/', all_cards_controller.card_list);
 // card routes end //
 
 
