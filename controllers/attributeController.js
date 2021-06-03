@@ -93,7 +93,7 @@ exports.attribute_delete_get = function(req, res, next) {
 };
 
 exports.attribute_delete_post = function(req, res) {
-	res.send('attribute delete post not implemented test');
+	res.send('attribute delete post not implemented tests');
 };
 
 exports.attribute_update_get = function(req, res) {
