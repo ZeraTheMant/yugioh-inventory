@@ -12,3 +12,13 @@ a {
 	padding: 0;
 	list-style: none;
 }
+
+.plain-bootstrap-row {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.plain-bootstrap-col {
+	padding-left: 0;
+	padding-right: 0;
+}

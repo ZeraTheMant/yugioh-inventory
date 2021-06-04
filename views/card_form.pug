@@ -3,19 +3,47 @@ extends layout
 block content
 	h1=title
 
-	form(method='POST' action='')
+	form#card-form(method='POST' action='')
 		div.form-group
-			label(for='card_category') !{'<strong>Card Category:</strong>'}
-			input#first_name.form-control(type='text' placeholder='First name (Christian) last' name='first_name' required='true' value=(undefined===author ? '' : author.first_name))
-			label(for='family_name') !{'<strong>Family Name:</strong>'}
-			input#family_name.form-control(type='text' placeholder='Family name (surname)' name='family_name' required='true' value=(undefined===author ? '' : author.family_name))
+			label(for='card-category') !{'<strong>Card Category:</strong>'}
+			select#card-category.form-control(type='select' name='card-category' required='true')
+				option(value='default', selected='true', disabled='true') Select a card category	
+				- var cardCategories = ['Monster', 'Spell', 'Trap']
+				for category in cardCategories
+					option(value=category) #{category}
+			
+			label(for='card_name') !{'<strong>Name:</strong>'}
+			input#card_name.form-control(type='text' name='card_name' required='true' value=(undefined===card ? '' : card.name))
+			
+			label(for='description') !{'<strong>Description:</strong>'}
+			textarea#description.form-control(name='description' rows='4' required='true' value=(undefined===card ? '' : card.description))
 			
 		div.form-group
-			label(for='date_of_birth') !{'<strong>Date of birth:</strong>'}
-			input#date_of_birth.form-control(type='date' placeholder='dd/mm/yyyy' name='date_of_birth'  value=(undefined===author ? '' : author.mdy_date_format(author.date_of_birth)))
+			div.plain-bootstrap-row.row
+				div.plain-bootstrap-col.col-sm
+					label(for='card_-ype') !{'<strong>Type:</strong>'}
+					select#card-type.form-control(type='select' name='card-type' required='true')
 			
-			label(for='date_of_death') !{'<strong>Date of death:</strong>'}
-			input#date_of_death.form-control(type='date' placeholder='dd/mm/yyyy' name='date_of_death' value=(undefined===author ? '' : author.mdy_date_format(author.date_of_death)))
+				div.plain-bootstrap-col.col-sm
+					label(for='monster-category') !{'<strong>Monster Category:</strong>'}
+					select#monster-category.form-control(type='select' name='monster_class' required='true')
+					
+		div.form-group
+			div.plain-bootstrap-row.row
+				div.plain-bootstrap-col.col-sm
+					label(for='attrib') !{'<strong>Attribute:</strong>'}
+					select#attrib.form-control(type='select' name='attrib' required='true')
+					
+				div.plain-bootstrap-col.col-sm
+					label(for='level') !{'<strong>Level:</strong>'}
+					select#level.form-control(type='select' name='level' required='true')
+					
+		div.form-group
+			label(for='atk-points') !{'<strong>ATK:</strong>'}
+			input#atk-points.form-control(type='number' name='atk-points' min='0' max='9999' required='true')
+			
+			label(for='def-points') !{'<strong>DEF:</strong>'}
+			input#def-points.form-control(type='number' name='def-points' min='0' max='9999' required='true')
 		
 		button.btn.btn-primary(type='submit') Submit
 	
@@ -23,3 +51,13 @@ block content
 		ul
 			for error in errors
 				li!= error.msg
+				
+				
+	script.
+		const monsterTypesObj = !{JSON.stringify(monster_types)}
+		const spellTypesObj = !{JSON.stringify(spell_types)}
+		const trapTypesObj = !{JSON.stringify(trap_types)}
+		const attributesObj = !{JSON.stringify(attributes)}
+		const monsterCategoriesObj = !{JSON.stringify(monster_categories)}
+	script(type='text/javascript' src="/javascripts/card_form.js")
+	script(type='text/javascript' src="/javascripts/shared_card_form_actions.js")
