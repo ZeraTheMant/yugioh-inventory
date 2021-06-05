@@ -10,7 +10,6 @@ const cardConstructor = () => {
 			default: 'Monster'
 		},
 		type: {type: String, required: true},
-		is_effect: {type: Boolean, required: true}
 	};
 	
 	return content;

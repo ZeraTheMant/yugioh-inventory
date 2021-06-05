@@ -4,6 +4,7 @@ const cardTypeSelect = document.querySelector('#card-type');
 const monsterCategorySelect = document.querySelector('#monster-category');
 const attributeSelect = document.querySelector('#attrib');
 const cardCategorySelect = document.querySelector('#card-category');
+const levelSelect = (!(document.querySelector('#level')==null)) ? document.querySelector('#level') : null;
 
 function loadTypeSelect(selectedCardCategory) {
 	cardTypeSelect.options.length = 0;
@@ -46,6 +47,14 @@ function resetCardSearchForm() {
 	monsterFieldsToggle(true);
 	attributeSelect.options.length = 0;
 	monsterCategorySelect.options.length = 0;
+	
+	if (levelSelect)
+		levelSelect.options.length = 0;
+}
+
+const levelObj = [];
+for (var i=1; i<13; i++) {
+	levelObj.push({name: i});
 }
 
 cardCategorySelect.addEventListener('change', (e) => {
@@ -59,6 +68,8 @@ cardCategorySelect.addEventListener('change', (e) => {
 			monsterFieldsToggle(false);
 			loadSelect(attributesObj, attributeSelect);
 			loadSelect(monsterCategoriesObj, monsterCategorySelect);			
+			if (levelSelect)
+				loadSelect(levelObj, levelSelect);
 		}
 	}
 	loadTypeSelect(selectedCardCategory);
