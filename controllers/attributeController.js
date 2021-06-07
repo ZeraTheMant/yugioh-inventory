@@ -1,6 +1,7 @@
 const async = require('async');
 const {body, validationResult} = require('express-validator');
 const Attribute = require('../models/attribute');
+const MonsterCard = require('../models/monster_card');
 
 exports.attribute_list = function(req, res, next) {
 	Attribute.find()
@@ -92,8 +93,26 @@ exports.attribute_delete_get = function(req, res, next) {
     });
 };
 
-exports.attribute_delete_post = function(req, res) {
-	res.send('attribute delete post not implemented tests');
+exports.attribute_delete_post = function(req, res, next) {
+	async.parallel({
+		attribute: function(callback) {
+			Attribute.findById(req.params.id).exec(callback);
+		},
+		monsters_with_this_attr: function(callback) {
+			MonsterCard.find({"attribute": req.params.id}).exec(callback);
+		}
+	}, function (err, results) {
+		if (err) { return next(err) };
+		
+		if (results.monsters_with_this_attr.length > 0) {
+			const context = {
+				title: 'Delete Attribute',
+				attribute: results.attribute,
+				monsters_with_this_attr: results.monster_with_this_attr
+			};
+			res.render('attribute_delete', context);
+		}
+	});
 };
 
 exports.attribute_update_get = function(req, res) {

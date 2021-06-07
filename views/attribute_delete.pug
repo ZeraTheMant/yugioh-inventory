@@ -1,0 +1,21 @@
+extends layout
+
+block content
+	h1 #{title}: #{attribute.name} 
+
+	if monsters_with_this_attr.length
+		p #[strong Delete the following cards with this attribute before attempting to delete.]
+		
+		div(style='margin-left:20px; margin-top:20px')
+			h4 Cards
+			
+			dl
+				each monster in monsters_with_this_attr
+	else
+		p Do you really want to delete this attribute?
+		
+		form(method='POST' action='')
+			div.form-group
+				input#attribute_id.form-control(type='hidden', name='attribute_id', required='true', value=attribute._id)
+
+			button.btn.btn-primary(type='submit') Delete		
