@@ -78,7 +78,10 @@ exports.attribute_delete_get = function(req, res, next) {
 	async.parallel({
         attribute: function(callback) {
             Attribute.findById(req.params.id).exec(callback);
-        },	      
+        },	
+		monsters_with_this_attr: function(callback) {
+			MonsterCard.find({"attribute": req.params.id}).exec(callback);//req.params.id
+		}		
     }, function(err, results) {
         if (err) { return next(err); }
         if (results.attribute==null) {
@@ -88,6 +91,7 @@ exports.attribute_delete_get = function(req, res, next) {
         const context = {
             title: 'Delete Attribute',
 			attribute: results.attribute,
+			monsters_with_this_attr: results.monsters_with_this_attr
         };
         res.render('attribute_delete', context);
     });
@@ -99,10 +103,10 @@ exports.attribute_delete_post = function(req, res, next) {
 			Attribute.findById(req.params.id).exec(callback);
 		},
 		monsters_with_this_attr: function(callback) {
-			MonsterCard.find({"attribute": req.params.id}).exec(callback);
+			MonsterCard.find({"attribute": req.params.id}).exec(callback);//req.params.id
 		}
 	}, function (err, results) {
-		if (err) { return next(err) };
+		if (err) { return next(err); }
 		
 		if (results.monsters_with_this_attr.length > 0) {
 			const context = {
@@ -111,6 +115,11 @@ exports.attribute_delete_post = function(req, res, next) {
 				monsters_with_this_attr: results.monster_with_this_attr
 			};
 			res.render('attribute_delete', context);
+		} else {
+			Attribute.findByIdAndRemove(req.body.attribute_id, function(err) {
+				if (err) { return next(err); }				
+				res.redirect('/attributes');
+			});
 		}
 	});
 };

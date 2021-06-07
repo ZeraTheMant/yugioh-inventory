@@ -10,7 +10,12 @@ block content
 			h4 Cards
 			
 			dl
-				each monster in monsters_with_this_attr
+			each monster in monsters_with_this_attr
+				dt
+					a(href=monster.url) #{monster.name}
+				dd Level #{monster.level} | #{monster.monster_class}
+				dd #{monster.type} | #{monster.attribute}
+				dd ATK: #{monster.atk} | DEF: #{monster.def}
 	else
 		p Do you really want to delete this attribute?
 		
