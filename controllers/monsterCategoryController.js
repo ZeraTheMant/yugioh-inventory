@@ -1,6 +1,7 @@
-const asyn = require('async');
+const async = require('async');
 const { body, validationResult } = require('express-validator');
 const MonsterCategory = require('../models/monster_category');
+const MonsterCard = require('../models/monster_card');
 
 exports.monster_category_list = function(req, res) {
 	MonsterCategory.find()
@@ -16,8 +17,28 @@ exports.monster_category_list = function(req, res) {
 		});
 };
 
-exports.monster_category_detail = function(req, res) {
-	res.send('monster category detail of ' + req.params.id +' not implemented');
+exports.monster_category_detail = function(req, res, next) {
+	async.parallel({
+		monster_category: function(callback) {
+			MonsterCategory.findById(req.params.id).exec(callback);
+		},
+		monsters_under_this_category: function(callback) {
+			MonsterCard.find({"monster_class": req.params.id}).exec(callback);
+		}
+	}, function(err, results) {
+		if (err) { return next(err); }
+		
+		if (results.monster_category==null) {
+			var err = new Error('Monster category not found.');
+			err.status = 404;
+			return next(err);
+		}
+		
+		const context = {
+		
+		};
+		res.render('monster_category_detail', context);
+	});
 };
 
 exports.monster_category_create_get = function(req, res, next) {
@@ -62,10 +83,30 @@ exports.monster_category_create_post = [
 ];
 
 exports.monster_category_delete_get = function(req, res, next) {
-	res.render('monster_category_form', {title: 'Create Monster Category'});
+	async.parallel({
+		monster_category: function(callback) {
+			MonsterCategory.findById(req.params.id).exec(callback);
+		},
+		monsters_under_this_category: function(callback) {
+			MonsterCard.find({"monster_class": req.params.id}).exec(callback);
+		}
+	}, function(err, results) {
+		if (err) { return next(err); }
+		
+		if (results.monster_category==null) {
+			res.redirect('/monster_categories');
+		}
+		
+		const context = {
+			title: 'Delete Monster Category',
+			monster_category: results.monster_category,
+			monsters_under_this_category: results.monsters_under_this_caegory
+		};
+		res.render('monster_category_delete', context);
+	});
 };
 
-exports.monster_category_delete_post = function(req, res) {
+exports.monster_category_delete_post = function(req, res, next) {
 	res.send('monster category delete post not implemented');
 };
 

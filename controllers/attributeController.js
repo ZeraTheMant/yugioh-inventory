@@ -16,6 +16,9 @@ exports.attribute_detail = function(req, res, next) {
 		attribute: function(callback) {
 			Attribute.findById(req.params.id)
 				.exec(callback);
+		},
+		attribute_monsters_count: function(callback) {
+			MonsterCard.find({"attribute": req.params.id}).exec(callback);
 		}
 	}, function(err, results) {
 		if (err) { return next(err); }
@@ -80,7 +83,7 @@ exports.attribute_delete_get = function(req, res, next) {
             Attribute.findById(req.params.id).exec(callback);
         },	
 		monsters_with_this_attr: function(callback) {
-			MonsterCard.find({"attribute": req.params.id}).exec(callback);//req.params.id
+			MonsterCard.find({"attribute": req.params.id}).exec(callback);//req.params.id		
 		}		
     }, function(err, results) {
         if (err) { return next(err); }
