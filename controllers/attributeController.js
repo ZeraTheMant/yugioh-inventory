@@ -124,10 +124,52 @@ exports.attribute_delete_post = function(req, res, next) {
 	});
 };
 
-exports.attribute_update_get = function(req, res) {
-	res.send('attribute update get not implemented');
+exports.attribute_update_get = function(req, res, next) {
+	Attribute.findById(req.params.id)
+		.exec(function(err, attribute_to_be_updated) {
+			if (err) { return next(err); }
+			const context = {
+				title: 'Update Attribute',
+				attribute: attribute_to_be_updated
+			};
+			
+			res.render('attribute_form', context);
+		});
 };
 
-exports.attribute_update_post = function(req, res) {
-	res.send('attribute update post not implemented');
-};
+exports.attribute_update_post = [
+	body('attribute', 'Attribute name required').trim().isLength({min:1}).escape(),
+	
+	(req, res, next) => {
+		const errors = validationResult(req);
+		
+		var attribute = new Attribute({
+			name: req.body.attribute,
+			_id: req.params.id
+		});
+		
+		if(!errors.isEmpty()) {
+			const context = {
+				title: 'Update Attribute',
+				attribute: attribute,
+				errors: errors.array()
+			};
+			res.render('attribute_form', context);
+		} else {
+			Attribute.findOne({'name': req.body.attribute})
+				.exec(function(err, found_attribute) {
+					if (err) { return next(err); }
+					
+					if (found_attribute) {
+						res.redirect(found_attribute.url);
+					} else {
+						Attribute.findByIdAndUpdate(req.params.id, attribute, {}, function (err, the_attribute) {
+							if (err) { return next(err); }
+							res.redirect(attribute.url);
+						});
+					}
+				}
+			);
+		}
+	}
+];
