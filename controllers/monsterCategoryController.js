@@ -108,12 +108,35 @@ exports.monster_category_delete_get = function(req, res, next) {
 	});
 };
 
-exports.monster_category_delete_post = [
-	body('monster_category_id', 'Monster category name required').trim().isLength({min: 1}).escape(),
-];
+exports.monster_category_delete_post = function(req, res, next) {
+	async.parallel({
+		monster_category: function(callback) {
+			MonsterCategory.findById(req.params.id).exec(callback);
+		},
+		monsters_under_this_category: function(callback) {
+			MonsterCard.find({"monster_class": req.params.id}).exec(callback);
+		}
+	}, function(err, results) {
+		if (err) { return next(err); }
+		
+		if (results.monsters_under_this_category.length > 0) {
+			const context = {
+				title: 'Delete Monster Category',
+				monster_category: results.monster_category,
+				monsters_under_this_category: results.monsters_under_this_category
+			};
+			res.render('monster_category_delete', context);
+		} else {
+			MonsterCategory.findByIdAndRemove(req.body.monster_category_id, function(err) {
+				if (err) { return next(err); }
+				res.redirect('/monster_categories');
+			});
+		}
+	});
+}
 
-exports.monster_category_update_get = function(req, res) {
-	res.send('monster category update get not implemented');
+exports.monster_category_update_get = function(req, res, next) {
+	//Attribute.findById
 };
 
 exports.monster_category_update_post = function(req, res) {
