@@ -134,10 +134,51 @@ exports.monster_type_delete_post = function(req, res, next) {
 	});
 };
 
-exports.monster_type_update_get = function(req, res) {
-	res.send('monster type update get not implemented');
+exports.monster_type_update_get = function(req, res, next) {
+	MonsterType.findById(req.params.id)
+		.exec(function(err, type_to_be_updated) {
+			if (err) { return next(err); }
+			
+			const context = {
+				title: 'Update Monster Type',
+				monster_type: type_to_be_updated
+			};
+			res.render('monster_type_form', context);
+		});
 };
 
-exports.monster_type_update_post = function(req, res) {
-	res.send('monster type update post not implemented');
-};
+exports.monster_type_update_post = [
+    body('monster_type', 'Monster type name required').trim().isLength({min: 1}).escape(),
+	
+	(req, res, next) => {
+		const errors = validationResult(req);
+		
+		const monster_type = new MonsterType({
+			name: req.body.monster_type,
+			_id: req.params.id
+		});
+		
+		if(!errors.isEmpty()) {
+			const context = {
+				title: 'Update Monster Type',
+				monster_type: monster_type,
+				errors: errors.array()
+			};
+			res.render('monster_type_form', context);
+		} else {
+			MonsterType.findOne({name: req.body.monster_type})
+				.exec(function(err, found_monster_type) {
+					if (err) { return next(err); }
+					
+					if (found_monster_type) {
+						res.redirect(found_monster_type.url);
+					} else {
+						MonsterType.findByIdAndUpdate(req.params.id, monster_type, {}, function(err) {
+							if (err) { return next(err); }
+							res.redirect(monster_type.url);
+						});
+					}
+				});
+		}
+	}
+];
