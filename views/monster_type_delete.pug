@@ -1,0 +1,26 @@
+extends layout
+
+block content
+	h1 #{title}: #{monster_type.name} 
+
+	if monsters_with_this_type.length
+		p #[strong Delete the following cards with this type before attempting to delete.]
+		
+		div(style='margin-left:20px; margin-top:20px')
+			h4 Cards
+			
+			dl
+			each monster in monsters_under_this_category
+				dt
+					a(href=monster.url) #{monster.name}
+				dd Level #{monster.level} | #{monster.monster_class}
+				dd #{monster.type} | #{monster.attribute}
+				dd ATK: #{monster.atk} | DEF: #{monster.def}
+	else
+		p Do you really want to delete this type?
+		
+		form(method='POST' action='')
+			div.form-group
+				input#monster_type_id.form-control(type='hidden', name='monster_type_id', required='true', value=monster_type._id)
+
+			button.btn.btn-primary(type='submit') Delete		

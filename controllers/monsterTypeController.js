@@ -82,8 +82,29 @@ exports.monster_type_create_post = [
     }
 ];
 
-exports.monster_type_delete_get = function(req, res) {
-	res.send('monster type delete get not implemented');
+exports.monster_type_delete_get = function(req, res, next) {
+	async.parallel({
+		monster_type: function(callback) {
+			MonsterType.findById(req.params.id).exec(callback);
+		},
+		monsters_with_this_type: function(callback) {
+			MonsterCard.find({"type": req.params.id}).exec(callback);
+		}
+	}, function(err, results) {
+		if (err) { return next(err); }
+		
+		if (results.monster_type==null) {
+			res.redirect('/monster_types');
+		}
+		
+		const context = {
+			title: 'Delete Monster Type',
+			monster_type: results.monster_type,
+			monsters_with_this_type: results.monsters_with_this_type
+		};
+		
+		res.render('monster_type_delete', context);
+	});
 };
 
 exports.monster_type_delete_post = function(req, res) {
