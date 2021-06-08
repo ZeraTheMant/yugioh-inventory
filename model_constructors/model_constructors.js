@@ -9,7 +9,6 @@ const cardConstructor = () => {
 			enum: ['Monster', 'Spell', 'Trap'],
 			default: 'Monster'
 		},
-		type: {type: String, required: true},
 	};
 	
 	return content;
@@ -23,18 +22,27 @@ const monsterCardConstructor = () => {
 		attribute: {type: String, min: 1, max: 12, required: true},
 		atk: {type: Number, min: 0, required: true},
 		def: {type: Number, min: 0, required: true},
-		monster_class: {type: String, required: true}	
+		monster_class: {type: String, required: true},
+		type: {type: String, required: true},		
 	}
 	
 	return Object.assign({}, prototype_instance, content);
 };
 
 const spellCardConstructor = () => {
-	return cardConstructor();
+	const prototype_instance = cardConstructor();
+	
+	const content = {type: {type: String, required: true}};
+	
+	return Object.assign({}, prototype_instance, content);
 }; 
 
 const trapCardConstructor = () => {
-	return cardConstructor();
+	const prototype_instance = cardConstructor();
+	
+	const content = {type: {type: String, required: true}};
+	
+	return Object.assign({}, prototype_instance, content);
 }; 
 
 module.exports = {monsterCardConstructor, spellCardConstructor, trapCardConstructor};

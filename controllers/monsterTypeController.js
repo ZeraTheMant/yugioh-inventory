@@ -107,8 +107,31 @@ exports.monster_type_delete_get = function(req, res, next) {
 	});
 };
 
-exports.monster_type_delete_post = function(req, res) {
-	res.send('monster type delete post not implemented');
+exports.monster_type_delete_post = function(req, res, next) {
+	async.parallel({
+		monster_type: function(callback) {
+			MonsterType.findById(req.params.id).exec(callback);
+		},
+		monsters_with_this_type: function(callback) {
+			MonsterCard.find({"type": req.params.id}).exec(callback);
+		}
+	}, function(err, results) {
+		if (err) { return next(err); }
+		
+		if (results.monsters_with_this_type.length > 0) {
+			const context = {
+				title: 'Delete Monster Type',
+				monster_type: results.monster_type,
+				monsters_with_this_type: results.monsters_with_this_type
+			};
+			res.render('monster_type_delete', context);
+		} else {
+			MonsterType.findByIdAndRemove(req.body.monster_type_id, function(err) {
+				if (err) { return next(err); }
+				res.redirect('/monster_types');
+			})
+		}
+	});
 };
 
 exports.monster_type_update_get = function(req, res) {
