@@ -1,0 +1,13 @@
+extends layout
+
+block content
+	h1 Monster Category: #{monster_category.name}
+	
+	div(style='margin-left:20px;margin-top:20px')
+		p This category has #{monsters_under_this_category} monsters
+
+	hr
+	p
+		a(href=monster_category.url+'/delete') Delete Monster Category
+	p
+		a(href=monster_category.url+'/update') Update Monster Category					

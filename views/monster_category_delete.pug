@@ -1,0 +1,26 @@
+extends layout
+
+block content
+	h1 #{title}: #{monster_category.name} 
+
+	if monsters_under_this_category.length
+		p #[strong Delete the following cards under this category before attempting to delete.]
+		
+		div(style='margin-left:20px; margin-top:20px')
+			h4 Cards
+			
+			dl
+			each monster in monsters_under_this_category
+				dt
+					a(href=monster.url) #{monster.name}
+				dd Level #{monster.level} | #{monster.monster_class}
+				dd #{monster.type} | #{monster.attribute}
+				dd ATK: #{monster.atk} | DEF: #{monster.def}
+	else
+		p Do you really want to delete this category?
+		
+		form(method='POST' action='')
+			div.form-group
+				input#monster_category_id.form-control(type='hidden', name='monster_category_id', required='true', value=monster_category._id)
+
+			button.btn.btn-primary(type='submit') Delete		
