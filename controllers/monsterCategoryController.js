@@ -136,9 +136,50 @@ exports.monster_category_delete_post = function(req, res, next) {
 }
 
 exports.monster_category_update_get = function(req, res, next) {
-	//Attribute.findById
+	MonsterCategory.findById(req.params.id)
+		.exec(function(err, monster_category_to_be_updated) {
+			if (err) { return next(err); }
+
+			const context = {
+				title: 'Update Monster Category',
+				monster_category: monster_category_to_be_updated
+			}
+			res.render('monster_category_form', context);
+		});
 };
 
-exports.monster_category_update_post = function(req, res) {
-	res.send('monster category update post not implemented');
-};
+exports.monster_category_update_post = [
+	body('monster_category', 'Monster category name required').trim().isLength({min: 1}).escape(),
+	
+	(req, res, next) => {
+		const errors = validationResult(req);
+		console.log('weeeeee');
+		const monster_category = {
+			name: req.body.monster_category,
+			_id: req.params.id
+		};
+		
+		if(!errors.isEmpty()) {
+			const context = {
+				title: 'Update Monster Category',
+				monster_category: monster_category,
+				errors: errors.array()
+			};
+			res.render('monster_category_form', context);
+		} else {
+			MonsterCategory.findOne({"name": req.body.monster_category})
+			.exec(function(err, found_monster_category) {
+				if (err) { return next(err); }
+				
+				if (found_monster_category) {
+					res.redirect(found_monster_category.url);
+				} else {
+					MonsterCategory.findByIdAndUpdate(req.params.id, monster_category, {}, function(err, the_monster_category) {
+						if (err) { return next(err); }
+						res.redirect(the_monster_category.url);
+					});
+				}
+			});
+		}
+	}
+];
