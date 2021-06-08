@@ -1,6 +1,7 @@
 const async = require('async');
 const { body, validationResult } = require('express-validator');
 const MonsterType = require('../models/monster_type');
+const MonsterCard = require('../models/monster_card');
 
 exports.monster_type_list = function(req, res, next) {
 	MonsterType.find()
@@ -15,8 +16,31 @@ exports.monster_type_list = function(req, res, next) {
 		});
 };
 
-exports.monster_type_detail = function(req, res) {
-	res.send('monster type detail of ' + req.params.id +' not implemented');
+exports.monster_type_detail = function(req, res, next) {
+	async.parallel({
+		monster_type: function(callback) {
+			MonsterType.findById(req.params.id).exec(callback);
+		},
+		monsters_with_this_type: function(callback) {
+			MonsterCard.find({"type": req.params.id}).exec(callback);
+		}
+	}, function(err, results) {
+		if (err) { return next(err); }
+		
+		if (results.monster_type==null) {
+			const err = new Error('Monster type not found');
+			err.status = 404;
+			return next(err);
+		}
+		
+		const context = {
+			title: 'Monster Type Detail',
+			monster_type: results.monster_type,
+			monsters_with_this_type_count: 3//results.monsters_with_this_type
+		}
+		
+		res.render('monster_type_detail', context);
+	});
 };
 
 exports.monster_type_create_get = function(req, res, next) {

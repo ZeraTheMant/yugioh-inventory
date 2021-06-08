@@ -1,0 +1,13 @@
+extends layout
+
+block content
+	h1 Monster Type: #{monster_type.name}
+	
+	div(style='margin-left:20px;margin-top:20px')
+		p This type has #{monsters_with_this_type_count} monsters
+
+	hr
+	p
+		a(href=monster_type.url+'/delete') Delete Monster Type
+	p
+		a(href=monster_type.url+'/update') Update Monster Type					
