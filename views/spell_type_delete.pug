@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	h1 #{title}: #{spell_type.name} 
+
+	if spell_cards_of_this_type.length
+		p #[strong Delete the following spell cards of this type before attempting to delete.]
+		
+		div(style='margin-left:20px; margin-top:20px')
+			h4 Spell Cards
+			
+			dl
+			each spell_card in spell_cards_of_this_type
+				dt
+					a(href=spell_card.url) #{spell_card.name}
+				dd #{spell_card.type}
+				dd #{spell_card.description}
+	else
+		p Do you really want to delete this spell type?
+		
+		form(method='POST' action='')
+			div.form-group
+				input#spell_type_id.form-control(type='hidden', name='spell_type_id', required='true', value=spell_type._id)
+
+			button.btn.btn-primary(type='submit') Delete		

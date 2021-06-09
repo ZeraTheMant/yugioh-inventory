@@ -1,6 +1,7 @@
 const async = require('async');
 const { body, validationResult } = require('express-validator');
 const TrapType = require('../models/trap_type');
+const TrapCard = require('../models/trap_card');
 
 exports.trap_type_list = function(req, res, next) {
 	TrapType.find()
@@ -15,8 +16,31 @@ exports.trap_type_list = function(req, res, next) {
 		});
 };
 
-exports.trap_type_detail = function(req, res) {
-	res.send('trap type detail of ' + req.params.id +' not implemented');
+exports.trap_type_detail = function(req, res, next) {
+	async.parallel({
+		trap_type: function(callback) {
+			TrapType.findById(req.params.id).exec(callback);
+		},
+		trap_cards_of_this_type: function(callback) {
+			TrapCard.find({"type": req.params.id}).exec(callback);
+		}
+	}, function(err, results) {
+		if (err) { return next(err); }
+		
+		if (results.trap_type==null) {
+			const err = new Error('Trap type not found');
+			err.status = 404;
+			return next(err);
+		} 
+		
+		const context = {
+			title: 'Trap Type Detail',
+			trap_type: results.trap_type,
+			trap_cards_of_this_type_count: 1987
+		};
+		
+		res.render('trap_type_detail', context);
+	});
 };
 
 exports.trap_type_create_get = function(req, res, next) {

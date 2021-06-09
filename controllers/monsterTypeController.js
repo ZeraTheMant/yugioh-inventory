@@ -168,17 +168,17 @@ exports.monster_type_update_post = [
 		} else {
 			MonsterType.findOne({name: req.body.monster_type})
 				.exec(function(err, found_monster_type) {
-					if (err) { return next(err); }
-					
-					if (found_monster_type) {
-						res.redirect(found_monster_type.url);
-					} else {
-						MonsterType.findByIdAndUpdate(req.params.id, monster_type, {}, function(err) {
-							if (err) { return next(err); }
-							res.redirect(monster_type.url);
-						});
-					}
-				});
+				if (err) { return next(err); }
+				
+				if (found_monster_type) {
+					res.redirect(found_monster_type.url);
+				} else {
+					MonsterType.findByIdAndUpdate(req.params.id, monster_type, {}, function(err) {
+						if (err) { return next(err); }
+						res.redirect(monster_type.url);
+					});
+				}
+			});
 		}
 	}
 ];
