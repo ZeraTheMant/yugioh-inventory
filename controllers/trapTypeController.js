@@ -132,7 +132,16 @@ exports.trap_type_delete_post = function(req, res, next) {
 };
 
 exports.trap_type_update_get = function(req, res, next) {
-	res.send('trap type update get not implemented');
+	TrapType.findById(req.params.id)
+	.exec(function(err, trap_type_to_be_updated) {
+		if (err) { return next(err); }
+		
+		const context = {
+			title: 'Update Trap Type',
+			trap_type: trap_type_to_be_updated
+		};
+		res.render('trap_type_form', context);
+	});
 };
 
 exports.trap_type_update_post = function(req, res) {
