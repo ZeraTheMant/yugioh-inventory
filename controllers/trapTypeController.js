@@ -144,6 +144,46 @@ exports.trap_type_update_get = function(req, res, next) {
 	});
 };
 
-exports.trap_type_update_post = function(req, res) {
-	res.send('trap type update post not implemented');
-};
+exports.trap_type_update_post = [
+	body('trap_type', 'Trap type name required').trim().isLength({min: 1}).escape(),
+	
+	(req, res, next) => {
+		const errors = validationResult(req);
+		
+		const trap_type = new TrapType({
+			name: req.body.trap_type,
+			_id: req.params.id
+		});
+		
+		if (!errors.isEmpty()) {
+			console.log('wog')
+			const context = {
+				title: 'Update Trap Type',
+				trap_type: trap_type,
+				errors: errors.array()
+			}
+			
+			res.render('trap_type_form', context);
+		} else {
+			console.log('bog');
+			TrapType.findOne({"name": req.body.trap_type})
+			.exec(function(err, found_trap_type) {
+				if (err) { return next(err); }
+				
+				if (found_trap_type) {
+					res.redirect(found_trap_type.url);
+				} else {
+					TrapType.findByIdAndUpdate(
+						req.params.id, 
+						trap_type, 
+						{},
+						function(err) {
+							if (err) { return next(err); }
+							res.redirect(trap_type.url);					
+						}
+					);
+				}
+			});
+		}
+	},
+];
