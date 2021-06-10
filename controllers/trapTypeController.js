@@ -104,11 +104,34 @@ exports.trap_type_delete_get = function(req, res, next) {
 	});
 };
 
-exports.trap_type_delete_post = function(req, res) {
-	res.send('trap type delete post not implemented');
+exports.trap_type_delete_post = function(req, res, next) {
+	async.parallel({
+		trap_type: function(callback) {
+			TrapType.findById(req.params.id).exec(callback);
+		},
+		trap_cards_of_this_type: function(callback) {
+			TrapCard.find({"type": req.params.id}).exec(callback);
+		}
+	}, function(err, results) {
+		if (err) { return next(err); }
+		
+		if (results.trap_cards_of_this_type.length > 0) {
+			const context = {
+				title: 'Delete Trap Type',
+				trap_type: results.trap_type,
+				trap_cards_of_this_type: results.trap_cards_of_this_type
+			};
+			res.render('trap_type_delete', context);
+		} else {
+			TrapType.findByIdAndRemove(req.body.trap_type_id, function(err) {
+				if (err) { return next(err); }
+				res.redirect('/trap_types');				
+			});
+		}
+	});
 };
 
-exports.trap_type_update_get = function(req, res) {
+exports.trap_type_update_get = function(req, res, next) {
 	res.send('trap type update get not implemented');
 };
 
