@@ -1,0 +1,13 @@
+extends layout
+
+block content
+	h1 Trap Type: #{trap_type.name}
+	
+	div(style='margin-left:20px;margin-top:20px')
+		p There are #{trap_cards_of_this_type_count} trap card/s or this type.
+
+	hr
+	p
+		a(href=trap_type.url+'/delete') Delete Trap Type
+	p
+		a(href=trap_type.url+'/update') Update Trap Type					

@@ -1,0 +1,25 @@
+extends layout
+
+block content
+	h1 #{title}: #{trap_type.name} 
+
+	if trap_cards_of_this_type.length
+		p #[strong Delete the following trap cards of this type before attempting to delete.]
+		
+		div(style='margin-left:20px; margin-top:20px')
+			h4 Trap Cards
+			
+			dl
+			each trap_card in trap_cards_of_this_type
+				dt
+					a(href=trap_card.url) #{trap_card.name}
+				dd #{trap_card.type}
+				dd #{trap_card.description}
+	else
+		p Do you really want to delete this trap type?
+		
+		form(method='POST' action='')
+			div.form-group
+				input#trap_type_id.form-control(type='hidden', name='trap_type_id', required='true', value=trap_type._id)
+
+			button.btn.btn-primary(type='submit') Delete		
