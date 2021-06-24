@@ -4,48 +4,52 @@ block content
 	h1=title
 
 	form#card-form(method='POST' action='')
-		div.form-group
-			label(for='card-category') !{'<strong>Card Category:</strong>'}
-			select#card-category.form-control(type='select' name='card_category' required='true')
-				option(value='default', selected='true', disabled='true') Select a card category	
-				- var cardCategories = ['Monster', 'Spell', 'Trap']
-				for category in cardCategories
-					option(value=category) #{category}
-			
-			label(for='card_name') !{'<strong>Name:</strong>'}
-			input#card_name.form-control(type='text' name='card_name' required='true' value=(undefined===card ? '' : card.name))
-			
-			label(for='description') !{'<strong>Description:</strong>'}
-			textarea#description.form-control(name='description' rows='4' required='true' value=(undefined===card ? '' : card.description))
-			
-		div.form-group
-			div.plain-bootstrap-row.row
-				div.plain-bootstrap-col.col-sm
-					label(for='card-type') !{'<strong>Type:</strong>'}
-					select#card-type.form-control(type='select' name='card_type' required='true')
-			
-				div.plain-bootstrap-col.col-sm
-					label(for='monster-category') !{'<strong>Monster Category:</strong>'}
-					select#monster-category.form-control(type='select' name='monster_category' disabled='true' required='true')
+		div.row
+			div.col-sm-4
+				p bogs
+			div.col-sm-8
+				div.form-group
+					label(for='card-category') !{'<strong>Card Category:</strong>'}
+					select#card-category.form-control(type='select' name='card_category' required='true')
+						option(value='default', selected='true', disabled='true') Select a card category	
+						- var cardCategories = ['Monster', 'Spell', 'Trap']
+						for category in cardCategories
+							option(value=category) #{category}
 					
-		div.form-group
-			div.plain-bootstrap-row.row
-				div.plain-bootstrap-col.col-sm
-					label(for='attrib') !{'<strong>Attribute:</strong>'}
-					select#attrib.form-control(type='select' name='attrib' disabled='true' required='true')
+					label(for='card_name') !{'<strong>Name:</strong>'}
+					input#card_name.form-control(type='text' name='card_name' required='true' value=(undefined===card ? '' : card.name))
 					
-				div.plain-bootstrap-col.col-sm
-					label(for='level') !{'<strong>Level:</strong>'}
-					select#level.form-control(type='select' name='level' disabled='true' required='true')
+					label(for='description') !{'<strong>Description:</strong>'}
+					textarea#description.form-control(name='description' rows='4' required='true' value=(undefined===card ? '' : card.description))
 					
-		div.form-group
-			label(for='atk-points') !{'<strong>ATK:</strong>'}
-			input#atk-points.form-control(type='number' name='atk_points' min='0' max='9999' disabled='true' required='true')
-			
-			label(for='def-points') !{'<strong>DEF:</strong>'}
-			input#def-points.form-control(type='number' name='def_points' min='0' max='9999' disabled='true' required='true')
-		
-		button.btn.btn-primary(type='submit') Submit
+				div.form-group
+					div.plain-bootstrap-row.row
+						div.plain-bootstrap-col.col-sm
+							label(for='card-type') !{'<strong>Type:</strong>'}
+							select#card-type.form-control(type='select' name='card_type' required='true')
+					
+						div.plain-bootstrap-col.col-sm
+							label(for='monster-category') !{'<strong>Monster Category:</strong>'}
+							select#monster-category.form-control(type='select' name='monster_category' disabled='true' required='true')
+							
+				div.form-group
+					div.plain-bootstrap-row.row
+						div.plain-bootstrap-col.col-sm
+							label(for='attrib') !{'<strong>Attribute:</strong>'}
+							select#attrib.form-control(type='select' name='attrib' disabled='true' required='true')
+							
+						div.plain-bootstrap-col.col-sm
+							label(for='level') !{'<strong>Level:</strong>'}
+							select#level.form-control(type='select' name='level' disabled='true' required='true')
+							
+				div.form-group
+					label(for='atk-points') !{'<strong>ATK:</strong>'}
+					input#atk-points.form-control(type='number' name='atk_points' min='0' max='9999' disabled='true' required='true')
+					
+					label(for='def-points') !{'<strong>DEF:</strong>'}
+					input#def-points.form-control(type='number' name='def_points' min='0' max='9999' disabled='true' required='true')
+				
+				button.btn.btn-primary(type='submit') Submit
 	
 	if errors
 		ul
